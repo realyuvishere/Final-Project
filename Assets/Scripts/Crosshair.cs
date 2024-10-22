@@ -38,7 +38,7 @@ public class Crosshair : MonoBehaviour
 
             if (Physics.Raycast(cam.position, cam.forward, out hit))
             {
-                hit.transform.gameObject.SendMessage("Teleport");
+                hit.transform.gameObject.SendMessage("OnTiltInteract");
 
             }
         }

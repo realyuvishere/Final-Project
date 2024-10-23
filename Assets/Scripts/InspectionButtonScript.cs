@@ -6,6 +6,7 @@ public class InspectionButtonScript : MonoBehaviour
 {
     public Material defaultMaterial;
     public Material hoverMaterial;
+    public GlobalVariables vars;
 
     private Renderer _renderer;
     private Vector3 _startingPosition;
@@ -16,12 +17,16 @@ public class InspectionButtonScript : MonoBehaviour
         _startingPosition = transform.parent.localPosition;
         _renderer = GetComponent<Renderer>();
         SetMaterial(false);
+        transform.parent.parent.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (vars.isWeaponBeingInspected)
+        {
+            transform.parent.parent.gameObject.SetActive(true);
+        }
     }
 
     public void OnPointerEnter()

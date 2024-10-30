@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class InspectionButtonScript : MonoBehaviour
         _startingPosition = transform.parent.localPosition;
         _renderer = GetComponent<Renderer>();
         SetMaterial(false);
-        transform.parent.parent.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -25,7 +26,10 @@ public class InspectionButtonScript : MonoBehaviour
     {
         if (vars.isWeaponBeingInspected)
         {
-            transform.parent.parent.gameObject.SetActive(true);
+            transform.parent.gameObject.SetActive(true);
+        } else
+        {
+            transform.parent.gameObject.SetActive(false);
         }
     }
 

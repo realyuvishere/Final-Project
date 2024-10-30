@@ -11,5 +11,4 @@ public class GlobalVariables : ScriptableObject
     public bool areAllWeaponsOnWall = true;
 
 
-
 }

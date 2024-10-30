@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,15 +11,18 @@ public class Crosshair : MonoBehaviour
     private float deltaRightUpperLimit = 6;
     private float deltaLeftUpperLimit = 84;
     private bool interacted = false;
-    private float objectDistanceThreshold = 10;
+
+    private Vector3 innnnn = new Vector3(0, 0, 0);
+
     void Start()
     {
-
+        
     }
 
 
     void Update()
     {
+        Console.WriteLine("Hello");
         Vector3 targetPos = cam.position + cam.forward * 4;
         transform.position = targetPos;
         transform.LookAt(cam.position);

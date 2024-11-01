@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 783320505e47a9b4398d258e588adbf9, type: 3}
   m_Name: Globals
   m_EditorClassIdentifier: 
-  isWeaponBeingInspected: 1
+  isWeaponBeingInspected: 0
   isWeaponBeingFired: 0
-  isWeaponInExhibit: 0
+  isWeaponInExhibit: 1
   areAllWeaponsOnWall: 0
+  SELECTED_WEAPON_TAG: SelectedWeapon
+  DEFAULT_TAG: Untagged

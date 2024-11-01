@@ -22,7 +22,6 @@ public class Crosshair : MonoBehaviour
 
     void Update()
     {
-        Console.WriteLine("Hello");
         Vector3 targetPos = cam.position + cam.forward * 4;
         transform.position = targetPos;
         transform.LookAt(cam.position);

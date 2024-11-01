@@ -12,14 +12,16 @@ public class WeaponView : MonoBehaviour
     private bool isExhibit = false;
     private bool isShooting = false;
     private bool isUnselectable = false;
+    private bool isCameraPositionUpdatedToInspectionTable = false;
 
-    private Vector3 _selectedPositionParent = new Vector3(0f, -0.55f, -3f);
+    private Vector3 _selectedPositionParent = new Vector3(4.5f, .6f, -3.2f);
 
     private Renderer _myRenderer;
-    private Vector3 _startingParentPosition;
-    private Vector3 _startingPosition;
-    private Quaternion _startingRotation;
-    private Quaternion _selectedRotation = Quaternion.Euler(0, 0, 0);
+    private Vector3 _initialParentPosition;
+    private Vector3 _initialPosition;
+    private Quaternion _initialParentRotation;
+    private Vector3 _initialCamPosition;
+    private Quaternion _initialCamRotation;
 
     public Transform cam;
 
@@ -28,9 +30,10 @@ public class WeaponView : MonoBehaviour
 
     void Start()
     {
-        _startingParentPosition = transform.parent.localPosition;
-        _startingPosition = transform.localPosition;
-        _startingRotation = transform.localRotation;
+        _initialParentPosition = transform.parent.localPosition;
+        _initialParentRotation = transform.parent.localRotation;
+        _initialCamPosition = cam.localPosition;
+        _initialCamRotation = cam.localRotation;
         _myRenderer = GetComponent<Renderer>();
     }
 
@@ -40,18 +43,18 @@ public class WeaponView : MonoBehaviour
         // isUnselectable = transform.parent.
         if (isSelected)
         {
-            transform.parent.localPosition = _selectedPositionParent;
+            _selectWeapon();
         }
 
 
 
         if (isExhibit)
         {
-            Exhibit();
+            _exhibit();
         }
     }
 
-    private void Exhibit()
+    private void _exhibit()
     {
         cam.position = new Vector3(0, 2, 100);
         gameObject.GetComponent<Collider>().enabled = false;
@@ -59,12 +62,16 @@ public class WeaponView : MonoBehaviour
         transform.parent.position = targetPos;
         Vector3 camAngles = cam.rotation.eulerAngles;
         transform.parent.LookAt(cam.position);
-        transform.parent.Rotate(camAngles.z*exhibitRotationThreshold, camAngles.y*exhibitRotationThreshold, camAngles.x*exhibitRotationThreshold);
+        transform.parent.Rotate(
+            camAngles.z*exhibitRotationThreshold, 
+            camAngles.y*exhibitRotationThreshold, 
+            camAngles.x*exhibitRotationThreshold
+        );
     }
 
     public void OnTiltInteract()
     {
-        if (!isSelected && !isExhibit && !isShooting)
+        if (!isSelected && !isExhibit && !isShooting && !vars.isWeaponBeingInspected && !vars.isWeaponInExhibit && !vars.isWeaponBeingFired)
         {
             vars.areAllWeaponsOnWall = false;
             vars.isWeaponBeingInspected = true;
@@ -85,13 +92,18 @@ public class WeaponView : MonoBehaviour
     {
         if (!isSelected || isUnselectable)
         {
-            transform.localPosition = _startingPosition;
+            transform.localPosition = _initialPosition;
         }
     }
 
-    public void TakeToExhibit()
+    public void ExhibitWeapon()
     {
         isExhibit = true;
+        isSelected = false;
+        isShooting = false;
+        vars.isWeaponInExhibit = true;
+        vars.isWeaponBeingInspected = false;
+        vars.isWeaponBeingFired = false;
     }
 
     public void GetOutOfExhibit()
@@ -99,10 +111,30 @@ public class WeaponView : MonoBehaviour
         isExhibit = false;
     }
 
-    private void PutBack()
+    public void PutWeaponBack()
     {
         isSelected = false;
         vars.isWeaponBeingInspected = false;
+        _unselectWeapon();
+    }
+
+    private void _selectWeapon()
+    {
+        tag = vars.SELECTED_WEAPON_TAG;
+        transform.parent.localPosition = _selectedPositionParent;
+        transform.parent.localRotation = Quaternion.Euler(0, 90, 0);
+
+        cam.localPosition = new Vector3(2.5f, 0f, 1.5f);
+
+    }
+
+    private void _unselectWeapon()
+    {
+        tag = vars.DEFAULT_TAG;
+        transform.parent.localPosition = _initialParentPosition;
+        transform.parent.localRotation = _initialParentRotation;
+
+        cam.localPosition = _initialCamPosition;
     }
 
 }

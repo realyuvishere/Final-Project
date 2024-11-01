@@ -9,6 +9,10 @@ public class InspectionButtonScript : MonoBehaviour
     public Material hoverMaterial;
     public GlobalVariables vars;
 
+    public bool isPutBack = false;
+    public bool isExhibit = false;
+    public bool isShoot = false;
+
     private Renderer _renderer;
     private Vector3 _startingPosition;
 
@@ -41,6 +45,19 @@ public class InspectionButtonScript : MonoBehaviour
     public void OnPointerExit()
     {
         SetMaterial(false);
+    }
+
+    public void OnTiltInteract()
+    {
+        if (isPutBack)
+        {
+            GameObject.FindWithTag(vars.SELECTED_WEAPON_TAG).SendMessage("PutWeaponBack");
+        }
+
+        if (isExhibit)
+        {
+            GameObject.FindWithTag(vars.SELECTED_WEAPON_TAG).SendMessage("ExhibitWeapon");
+        }
     }
 
     private void SetMaterial(bool isHovered)

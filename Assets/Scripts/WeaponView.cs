@@ -25,15 +25,15 @@ public class WeaponView : MonoBehaviour
 
     public Transform cam;
 
-    private float exhibitRotationThreshold = 10f;
+    private float exhibitRotationThreshold = 5f;
 
 
     void Start()
     {
         _initialParentPosition = transform.parent.localPosition;
         _initialParentRotation = transform.parent.localRotation;
-        _initialCamPosition = cam.localPosition;
-        _initialCamRotation = cam.localRotation;
+        _initialCamPosition = cam.parent.localPosition;
+        _initialCamRotation = cam.parent.localRotation;
         _myRenderer = GetComponent<Renderer>();
     }
 
@@ -56,7 +56,7 @@ public class WeaponView : MonoBehaviour
 
     private void _exhibit()
     {
-        cam.position = new Vector3(0, 2, 100);
+        cam.parent.position = new Vector3(0, 2, 100);
         gameObject.GetComponent<Collider>().enabled = false;
         Vector3 targetPos = cam.position + cam.forward * 4;
         transform.parent.position = targetPos;
@@ -124,7 +124,7 @@ public class WeaponView : MonoBehaviour
         transform.parent.localPosition = _selectedPositionParent;
         transform.parent.localRotation = Quaternion.Euler(0, 90, 0);
 
-        cam.localPosition = new Vector3(2.5f, 0f, 1.5f);
+        cam.parent.localPosition = new Vector3(2.5f, 2f, 1.5f);
 
     }
 
@@ -134,7 +134,7 @@ public class WeaponView : MonoBehaviour
         transform.parent.localPosition = _initialParentPosition;
         transform.parent.localRotation = _initialParentRotation;
 
-        cam.localPosition = _initialCamPosition;
+        cam.parent.localPosition = _initialCamPosition;
     }
 
 }

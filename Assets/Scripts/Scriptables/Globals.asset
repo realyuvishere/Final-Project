@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWeaponBeingInspected: 0
   isWeaponBeingFired: 0
-  isWeaponInExhibit: 1
+  isWeaponInExhibit: 0
   areAllWeaponsOnWall: 0
   SELECTED_WEAPON_TAG: SelectedWeapon
   DEFAULT_TAG: Untagged

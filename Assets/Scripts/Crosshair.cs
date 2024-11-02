@@ -7,7 +7,9 @@ public class Crosshair : MonoBehaviour
 {
     public Transform cam;
     public Transform staticCrosshair;
-    private int rotationThreshold = 2;
+    public GlobalVariables vars;
+
+    private int rotationThreshold = 1.75f;
     private float deltaRightUpperLimit = 6;
     private float deltaLeftUpperLimit = 84;
     private bool interacted = false;
@@ -37,12 +39,24 @@ public class Crosshair : MonoBehaviour
         {
             interacted = true;
 
-            RaycastHit hit;
+            if (vars.isWeaponInExhibit && !vars.isExitExhibitMenuDisplayed) {
 
-            if (Physics.Raycast(cam.position, cam.forward, out hit))
-            {
-                hit.transform.gameObject.SendMessage("OnTiltInteract");
 
+                if (Time.time - vars.exhibitExitTimeOutStart > vars.exhibitExitTimeOutThreshold || vars.exhibitExitTimeOutStart == 0.0f)
+                {
+                    vars.exhibitExitTimeOutStart = 0.0f;
+                    vars.isExitExhibitMenuDisplayed = true;
+                }
+                
+            } else {
+
+                RaycastHit hit;
+
+                if (Physics.Raycast(cam.position, cam.forward, out hit))
+                {
+                    hit.transform.gameObject.SendMessage("OnTiltInteract");
+
+                }
             }
         }
 

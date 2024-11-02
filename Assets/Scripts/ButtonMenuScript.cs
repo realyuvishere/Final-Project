@@ -18,9 +18,12 @@ public class ButtonMenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (vars.isWeaponBeingInspected && isInspectionMenu)
+        if ((vars.isWeaponBeingInspected && isInspectionMenu) || (vars.isWeaponBeingFired && isShootingRangeMenu))
         {
-            _updateChildrenActive(vars.isWeaponBeingInspected);
+            _updateChildrenActive(true);
+        } else
+        {
+            _updateChildrenActive(false);
         }
 
     }

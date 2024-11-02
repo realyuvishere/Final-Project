@@ -7,12 +7,15 @@ public class WeaponView : MonoBehaviour
 {
 
     public GlobalVariables vars;
+    public Transform cam;
+    public float shootingXOffset = 0f;
+    public float shootingYOffset = -0.3f;
+    public float shootingZOffset = 0f;
 
     private bool isSelected = false;    
     private bool isExhibit = false;
     private bool isShooting = false;
     private bool isUnselectable = false;
-    private bool isCameraPositionUpdatedToInspectionTable = false;
 
     private Vector3 _selectedPositionParent = new Vector3(4.5f, .6f, -3.2f);
 
@@ -23,7 +26,7 @@ public class WeaponView : MonoBehaviour
     private Vector3 _initialCamPosition;
     private Quaternion _initialCamRotation;
 
-    public Transform cam;
+    
 
     private float exhibitRotationThreshold = 5f;
 
@@ -41,6 +44,14 @@ public class WeaponView : MonoBehaviour
     void Update()
     {
         // isUnselectable = transform.parent.
+
+        if (isSelected || isExhibit || isShooting || vars.isWeaponBeingInspected || vars.isWeaponInExhibit || vars.isWeaponBeingFired)
+        {
+            gameObject.GetComponent<Collider>().enabled = false;
+        } else
+        {
+            gameObject.GetComponent<Collider>().enabled = true;
+        }
         if (isSelected)
         {
             _selectWeapon();
@@ -48,25 +59,15 @@ public class WeaponView : MonoBehaviour
 
 
 
-        if (isExhibit)
+        if (isExhibit && vars.isWeaponInExhibit && !vars.isExitExhibitMenuDisplayed)
         {
             _exhibit();
         }
-    }
 
-    private void _exhibit()
-    {
-        cam.parent.position = new Vector3(0, 2, 100);
-        gameObject.GetComponent<Collider>().enabled = false;
-        Vector3 targetPos = cam.position + cam.forward * 4;
-        transform.parent.position = targetPos;
-        Vector3 camAngles = cam.rotation.eulerAngles;
-        transform.parent.LookAt(cam.position);
-        transform.parent.Rotate(
-            camAngles.z*exhibitRotationThreshold, 
-            camAngles.y*exhibitRotationThreshold, 
-            camAngles.x*exhibitRotationThreshold
-        );
+        if (isShooting && vars.isWeaponBeingFired)
+        {
+            _shootingRange();
+        }
     }
 
     public void OnTiltInteract()
@@ -96,6 +97,16 @@ public class WeaponView : MonoBehaviour
         }
     }
 
+    public void ShootingRange()
+    {
+        isShooting = true;
+        isSelected = false;
+        isExhibit = false;
+        vars.isWeaponBeingFired = true;
+        vars.isWeaponBeingInspected = false;
+        vars.isWeaponInExhibit = false;
+    }
+
     public void ExhibitWeapon()
     {
         isExhibit = true;
@@ -106,15 +117,18 @@ public class WeaponView : MonoBehaviour
         vars.isWeaponBeingFired = false;
     }
 
-    public void GetOutOfExhibit()
-    {
-        isExhibit = false;
-    }
-
     public void PutWeaponBack()
     {
         isSelected = false;
+        isExhibit = false;
+        isShooting = false;
         vars.isWeaponBeingInspected = false;
+        vars.isWeaponInExhibit = false;
+        vars.isWeaponBeingFired = false;
+        vars.areAllWeaponsOnWall = true;
+        vars.isExitExhibitMenuDisplayed = false;
+        vars.exhibitExitTimeOutStart = 0f;
+        
         _unselectWeapon();
     }
 
@@ -137,4 +151,30 @@ public class WeaponView : MonoBehaviour
         cam.parent.localPosition = _initialCamPosition;
     }
 
+    private void _exhibit()
+    {
+        cam.parent.position = new Vector3(0, 2, 100);
+        Vector3 targetPos = cam.position + cam.forward * vars.weaponExhibitZIndex;
+        transform.parent.position = targetPos;
+        Vector3 camAngles = cam.rotation.eulerAngles;
+        transform.parent.LookAt(cam.position);
+        transform.parent.Rotate(
+            camAngles.z*exhibitRotationThreshold, 
+            camAngles.y*exhibitRotationThreshold, 
+            camAngles.x*exhibitRotationThreshold
+        );
+    }
+
+    private void _shootingRange() {
+
+        cam.parent.position = new Vector3(0, 2, -1);
+
+        Vector3 camPos = cam.position;
+        Vector3 camFor = cam.forward;
+        Vector3 targetPos = camPos + camFor * 2;
+        transform.parent.position = targetPos;
+        transform.parent.LookAt(cam.position);
+        transform.parent.Rotate(0, -90, 0);
+        transform.localPosition = new Vector3(shootingXOffset, shootingYOffset, shootingZOffset);
+    }
 }

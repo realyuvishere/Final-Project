@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - SelectedWeapon
+  - ExitExhibitMenuContainer
+  - Target1pt
+  - Target10pt
   layers:
   - Default
   - TransparentFX

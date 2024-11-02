@@ -9,12 +9,10 @@ public class Crosshair : MonoBehaviour
     public Transform staticCrosshair;
     public GlobalVariables vars;
 
-    private int rotationThreshold = 1.75f;
+    private int rotationThreshold = 2;
     private float deltaRightUpperLimit = 6;
     private float deltaLeftUpperLimit = 84;
     private bool interacted = false;
-
-    private Vector3 innnnn = new Vector3(0, 0, 0);
 
     void Start()
     {
@@ -24,7 +22,7 @@ public class Crosshair : MonoBehaviour
 
     void Update()
     {
-        Vector3 targetPos = cam.position + cam.forward * 4;
+        Vector3 targetPos = cam.position + cam.forward * vars.cursorZIndex;
         transform.position = targetPos;
         transform.LookAt(cam.position);
         staticCrosshair.position = targetPos;
@@ -42,7 +40,7 @@ public class Crosshair : MonoBehaviour
             if (vars.isWeaponInExhibit && !vars.isExitExhibitMenuDisplayed) {
 
 
-                if (Time.time - vars.exhibitExitTimeOutStart > vars.exhibitExitTimeOutThreshold || vars.exhibitExitTimeOutStart == 0.0f)
+                if ((Time.time - vars.exhibitExitTimeOutStart > vars.exhibitExitTimeOutThreshold) || (vars.exhibitExitTimeOutStart == 0.0f))
                 {
                     vars.exhibitExitTimeOutStart = 0.0f;
                     vars.isExitExhibitMenuDisplayed = true;

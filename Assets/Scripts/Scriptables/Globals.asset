@@ -15,6 +15,13 @@ MonoBehaviour:
   isWeaponBeingInspected: 0
   isWeaponBeingFired: 0
   isWeaponInExhibit: 0
-  areAllWeaponsOnWall: 0
+  isExitExhibitMenuDisplayed: 0
+  areAllWeaponsOnWall: 1
+  exhibitExitTimeOutStart: 0
+  exhibitExitTimeOutThreshold: 10
+  cursorZIndex: 2
+  weaponExhibitZIndex: 4
+  fixedMenuZIndex: 3
   SELECTED_WEAPON_TAG: SelectedWeapon
   DEFAULT_TAG: Untagged
+  EXHIBIT_MENU_TAG: ExitExhibitMenuContainer

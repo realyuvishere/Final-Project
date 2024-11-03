@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 783320505e47a9b4398d258e588adbf9, type: 3}
   m_Name: Globals
   m_EditorClassIdentifier: 
-  isWeaponBeingInspected: 0
+  isWeaponBeingInspected: 1
   isWeaponBeingFired: 0
   isWeaponInExhibit: 0
   isExitExhibitMenuDisplayed: 0
-  areAllWeaponsOnWall: 1
+  areAllWeaponsOnWall: 0
   exhibitExitTimeOutStart: 0
   exhibitExitTimeOutThreshold: 10
   cursorZIndex: 2

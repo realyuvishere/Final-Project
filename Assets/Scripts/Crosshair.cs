@@ -14,11 +14,6 @@ public class Crosshair : MonoBehaviour
     private float deltaLeftUpperLimit = 84;
     private bool interacted = false;
 
-    void Start()
-    {
-        
-    }
-
 
     void Update()
     {
@@ -52,7 +47,7 @@ public class Crosshair : MonoBehaviour
 
                 if (Physics.Raycast(cam.position, cam.forward, out hit))
                 {
-                    hit.transform.gameObject.SendMessage("OnTiltInteract");
+                    hit.transform.gameObject.SendMessage("OnTiltInteract", SendMessageOptions.DontRequireReceiver);
 
                 }
             }

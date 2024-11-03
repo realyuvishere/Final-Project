@@ -15,6 +15,7 @@ public class InspectionButtonScript : MonoBehaviour
     public bool isIgnoreExhibitExitBtn = false;
     public bool isShootingRangeButton = false;
     public bool isSelectionButton = false;
+    public bool isFireBtn = false;
     // public bool 
     public bool staysActive = false;
 
@@ -73,6 +74,15 @@ public class InspectionButtonScript : MonoBehaviour
         {
             GameObject.FindWithTag(vars.SELECTED_WEAPON_TAG).SendMessage("ShootingRange");
         }
+
+        if (isFireBtn)
+        {
+            GameObject.FindWithTag(vars.SELECTED_WEAPON_TAG).SendMessage("FireWeapon");
+        }
+    }
+
+    public void OnPointerClick() {
+        OnTiltInteract();
     }
 
     private void SetMaterial(bool isHovered)

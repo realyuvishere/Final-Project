@@ -17,6 +17,7 @@ public class ExitExhibitDialogParent : MonoBehaviour
         if (vars.isExitExhibitMenuDisplayed)
         {
             transform.GetChild(0).gameObject.SetActive(true);
+            Handheld.Vibrate();
         } else {
             transform.GetChild(0).gameObject.SetActive(false);
         }

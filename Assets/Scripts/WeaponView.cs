@@ -8,13 +8,21 @@ public class WeaponView : MonoBehaviour
 
     public GlobalVariables vars;
     public Transform cam;
+    public Transform muzzle;
+    public GameObject bulletPrefab;
+    public AmmoScriptable ammo;
     public float shootingXOffset = 0f;
     public float shootingYOffset = -0.3f;
     public float shootingZOffset = 0f;
 
+    public AudioSource weaponSoundSource;
+    public AudioClip weaponCockingSound;
+    public AudioClip weaponFireSound;
+
     private bool isSelected = false;    
     private bool isExhibit = false;
-    private bool isShooting = false;
+    public bool isShooting = false;
+    public bool isFiring = false;
     private bool isUnselectable = false;
 
     private Vector3 _selectedPositionParent = new Vector3(4.5f, .6f, -3.2f);
@@ -25,9 +33,10 @@ public class WeaponView : MonoBehaviour
     private Quaternion _initialParentRotation;
     private Vector3 _initialCamPosition;
     private Quaternion _initialCamRotation;
+    private float nextFire = 0f;
+    public int currentAmmo = 0;
 
     
-
     private float exhibitRotationThreshold = 5f;
 
 
@@ -38,6 +47,7 @@ public class WeaponView : MonoBehaviour
         _initialCamPosition = cam.parent.localPosition;
         _initialCamRotation = cam.parent.localRotation;
         _myRenderer = GetComponent<Renderer>();
+        currentAmmo = ammo.maxAmmo;
     }
 
     // Update is called once per frame
@@ -67,7 +77,16 @@ public class WeaponView : MonoBehaviour
         if (isShooting && vars.isWeaponBeingFired)
         {
             _shootingRange();
+
+            if (isFiring)
+            {
+                _firing();
+            }
         }
+    }
+
+    public void OnPointerClick() {
+        OnTiltInteract();
     }
 
     public void OnTiltInteract()
@@ -132,6 +151,16 @@ public class WeaponView : MonoBehaviour
         _unselectWeapon();
     }
 
+    public void FireWeapon()
+    {
+        weaponSoundSource.PlayOneShot(weaponCockingSound);
+        // Debug.Log("Cocking weapon" + Time.time);
+        Invoke("_switchFiringState", 2f);
+    }
+
+    private void _switchFiringState() {
+        isFiring = !isFiring;
+    }
     private void _selectWeapon()
     {
         tag = vars.SELECTED_WEAPON_TAG;
@@ -167,7 +196,7 @@ public class WeaponView : MonoBehaviour
 
     private void _shootingRange() {
 
-        cam.parent.position = new Vector3(0, 2, -1);
+        cam.parent.position = new Vector3(0, 2, 0);
 
         Vector3 camPos = cam.position;
         Vector3 camFor = cam.forward;
@@ -176,5 +205,29 @@ public class WeaponView : MonoBehaviour
         transform.parent.LookAt(cam.position);
         transform.parent.Rotate(0, -90, 0);
         transform.localPosition = new Vector3(shootingXOffset, shootingYOffset, shootingZOffset);
+    }
+
+    private void _refillAmmo() {
+        currentAmmo = ammo.maxAmmo;
+    }
+
+    private void _firing() {
+        if (currentAmmo == 0)
+        {
+            Debug.Log("Out of ammo");
+            isFiring = false;
+            Invoke("_refillAmmo", 2f);
+        }
+
+        if (Time.time >= nextFire) 
+        {
+            var projectile = Instantiate(bulletPrefab, muzzle.position, muzzle.rotation);
+            var bScript = projectile.GetComponent<BulletScript>();
+            bScript.Ammo = ammo;
+            bScript.bulletSoundSource = weaponSoundSource;
+            bScript.bulletSound = weaponFireSound;
+            currentAmmo--;
+            nextFire = Time.time + ammo.fireRate;
+        }
     }
 }

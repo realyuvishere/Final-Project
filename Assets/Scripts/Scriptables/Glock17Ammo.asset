@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b80aa46033f5194b9be5cb5b5702722, type: 3}
   m_Name: Glock17Ammo
   m_EditorClassIdentifier: 
-  velocity: 150
-  fireRate: 1
+  velocity: 200
+  fireRate: 0.5
   damage: 10
   range: 100
   weight: 1

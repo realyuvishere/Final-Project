@@ -8,6 +8,7 @@ TagManager:
   - ExitExhibitMenuContainer
   - Target1pt
   - Target10pt
+  - TeleportSphere
   layers:
   - Default
   - TransparentFX

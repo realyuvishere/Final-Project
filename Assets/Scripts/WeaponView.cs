@@ -85,6 +85,11 @@ public class WeaponView : MonoBehaviour
         }
     }
 
+    public void OnGazeInteract()
+    {
+        OnTiltInteract();
+    }
+
     public void OnPointerClick() {
         OnTiltInteract();
     }
@@ -196,7 +201,7 @@ public class WeaponView : MonoBehaviour
 
     private void _shootingRange() {
 
-        cam.parent.position = new Vector3(0, 2, 0);
+        // cam.parent.position = new Vector3(0, 2, 0);
 
         Vector3 camPos = cam.position;
         Vector3 camFor = cam.forward;
@@ -230,4 +235,6 @@ public class WeaponView : MonoBehaviour
             nextFire = Time.time + ammo.fireRate;
         }
     }
+
+
 }

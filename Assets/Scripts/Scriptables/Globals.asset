@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Globals
   m_EditorClassIdentifier: 
   isWeaponBeingInspected: 0
-  isWeaponBeingFired: 0
+  isWeaponBeingFired: 1
   isWeaponInExhibit: 0
   isExitExhibitMenuDisplayed: 0
   areAllWeaponsOnWall: 0
+  isExhibitMenuOutOfRange: 0
   exhibitExitTimeOutStart: 0
   exhibitExitTimeOutThreshold: 10
   cursorZIndex: 2
@@ -25,3 +26,4 @@ MonoBehaviour:
   SELECTED_WEAPON_TAG: SelectedWeapon
   DEFAULT_TAG: Untagged
   EXHIBIT_MENU_TAG: ExitExhibitMenuContainer
+  TELEPORT_SPHERE_TAG: TeleportSphere

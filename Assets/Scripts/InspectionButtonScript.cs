@@ -43,6 +43,11 @@ public class InspectionButtonScript : MonoBehaviour
         }
     }
 
+    public void OnGazeInteract()
+    {
+        OnTiltInteract();
+    }
+
     public void OnPointerEnter()
     {
         SetMaterial(true);

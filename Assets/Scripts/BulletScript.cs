@@ -19,6 +19,7 @@ public class BulletScript : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, Ammo.velocity * Time.deltaTime))
         {
             transform.position = hit.point;
+            hit.collider.gameObject.SendMessage("BulletHit", SendMessageOptions.DontRequireReceiver);
             GetComponent<MeshRenderer>().enabled = false;
             Destroy(gameObject, 1f);
             Destroy(this);

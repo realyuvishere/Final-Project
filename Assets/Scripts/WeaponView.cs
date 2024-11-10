@@ -36,6 +36,8 @@ public class WeaponView : MonoBehaviour
     private float nextFire = 0f;
     public int currentAmmo = 0;
 
+    private bool isWeaponInitialPositionSet = false;
+
     
     private float exhibitRotationThreshold = 5f;
 
@@ -44,8 +46,8 @@ public class WeaponView : MonoBehaviour
     {
         _initialParentPosition = transform.parent.localPosition;
         _initialParentRotation = transform.parent.localRotation;
-        _initialCamPosition = cam.parent.localPosition;
-        _initialCamRotation = cam.parent.localRotation;
+        _initialCamPosition = cam.parent.parent.localPosition;
+        _initialCamRotation = cam.parent.parent.localRotation;
         _myRenderer = GetComponent<Renderer>();
         currentAmmo = ammo.maxAmmo;
     }
@@ -77,6 +79,7 @@ public class WeaponView : MonoBehaviour
         if (isShooting && vars.isWeaponBeingFired)
         {
             _shootingRange();
+            ammo._recoilUpdate(cam, transform);
 
             if (isFiring)
             {
@@ -152,6 +155,7 @@ public class WeaponView : MonoBehaviour
         vars.areAllWeaponsOnWall = true;
         vars.isExitExhibitMenuDisplayed = false;
         vars.exhibitExitTimeOutStart = 0f;
+        isWeaponInitialPositionSet = false;
         
         _unselectWeapon();
     }
@@ -172,7 +176,7 @@ public class WeaponView : MonoBehaviour
         transform.parent.localPosition = _selectedPositionParent;
         transform.parent.localRotation = Quaternion.Euler(0, 90, 0);
 
-        cam.parent.localPosition = new Vector3(2.5f, 2f, 1.5f);
+        cam.parent.parent.localPosition = new Vector3(2.5f, 2f, 1.5f);
 
     }
 
@@ -182,12 +186,12 @@ public class WeaponView : MonoBehaviour
         transform.parent.localPosition = _initialParentPosition;
         transform.parent.localRotation = _initialParentRotation;
 
-        cam.parent.localPosition = _initialCamPosition;
+        cam.parent.parent.localPosition = _initialCamPosition;
     }
 
     private void _exhibit()
     {
-        cam.parent.position = new Vector3(0, 2, 100);
+        cam.parent.parent.position = new Vector3(0, 2, 100);
         Vector3 targetPos = cam.position + cam.forward * vars.weaponExhibitZIndex;
         transform.parent.position = targetPos;
         Vector3 camAngles = cam.rotation.eulerAngles;
@@ -210,6 +214,11 @@ public class WeaponView : MonoBehaviour
         transform.parent.LookAt(cam.position);
         transform.parent.Rotate(0, -90, 0);
         transform.localPosition = new Vector3(shootingXOffset, shootingYOffset, shootingZOffset);
+        if (!isWeaponInitialPositionSet)
+        {
+            ammo.initialWeaponPosition = transform.parent.localPosition;
+            isWeaponInitialPositionSet = true;
+        }
     }
 
     private void _refillAmmo() {
@@ -231,6 +240,7 @@ public class WeaponView : MonoBehaviour
             bScript.Ammo = ammo;
             bScript.bulletSoundSource = weaponSoundSource;
             bScript.bulletSound = weaponFireSound;
+            ammo.recoil();
             currentAmmo--;
             nextFire = Time.time + ammo.fireRate;
         }

@@ -29,4 +29,15 @@ public class GlobalVariables : ScriptableObject
     public string EXHIBIT_MENU_TAG = "ExitExhibitMenuContainer";
     public string TELEPORT_SPHERE_TAG = "TeleportSphere";
 
+    public int TOTAL_POINTS = 0;
+
+    public void AddPoints(int pointsToAdd)
+    {
+        TOTAL_POINTS += pointsToAdd;
+    }
+
+    public void ResetPoints()
+    {
+        TOTAL_POINTS = 0;
+    }
 }

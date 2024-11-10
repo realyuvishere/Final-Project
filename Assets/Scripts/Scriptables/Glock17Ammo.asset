@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 200
   fireRate: 0.5
-  damage: 10
-  range: 100
-  weight: 1
-  maxAmmo: 10
+  maxAmmo: 50
+  recoilX: 2.13
+  recoilY: 2.26
+  recoilZ: 3.66
+  kickbackZ: 0.72
+  snappiness: 2.37
+  returnThreshold: 9
+  currentRotation: {x: -1.4e-44, y: 1.4e-44, z: -1.4e-44}
+  targetRotation: {x: 0, y: 0, z: 0}
+  targetPosition: {x: 4.205129, y: -0.6821555, z: -3.663879}
+  currentPosition: {x: 4.205117, y: -0.682154, z: -3.6638849}
+  initialWeaponPosition: {x: 4.237614, y: -0.6688497, z: -3.560341}

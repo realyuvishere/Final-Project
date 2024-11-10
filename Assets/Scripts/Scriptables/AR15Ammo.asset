@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 300
   fireRate: 0.5
-  maxAmmo: 100
+  maxAmmo: 30
   recoilX: 1.44
   recoilY: 4.57
   recoilZ: 4.19

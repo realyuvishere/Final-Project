@@ -1920,7 +1920,7 @@ GameObject:
   m_Component:
   - component: {fileID: 503897847}
   - component: {fileID: 503897848}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: AR 15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4574,7 +4574,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 937802751}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9416,7 +9416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2073855598}
   - component: {fileID: 2073855599}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Glock 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9771,6 +9771,9 @@ MonoBehaviour:
   cam: {fileID: 8839566750546684827}
   staticCrosshair: {fileID: 1259768508}
   vars: {fileID: 11400000, guid: ce6727fdaa3e7b94da5f1b8ca39c48f8, type: 2}
+  InteractionLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!81 &1042686396464936364
 AudioListener:
   m_ObjectHideFlags: 0
@@ -9834,7 +9837,6 @@ GameObject:
   - component: {fileID: 2368226007587136908}
   - component: {fileID: 6081450257984326832}
   - component: {fileID: 6081450257984326831}
-  - component: {fileID: 6081450257984326833}
   m_Layer: 3
   m_Name: Frame_low
   m_TagString: Untagged
@@ -10178,20 +10180,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.3496268, y: 22.616077, z: 6.654044}
   m_Center: {x: 0.0028016567, y: 2.9584446, z: -0.704669}
---- !u!114 &6081450257984326833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1608730116148263650}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7b2640832938614e8f26d25863b42cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 8839566750546684827}
-  ammo: {fileID: 11400000, guid: 5aae986ea8720564e990f0c670e20d06, type: 2}
 --- !u!1 &7095243364949119282
 GameObject:
   m_ObjectHideFlags: 0

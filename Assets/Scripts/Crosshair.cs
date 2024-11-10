@@ -14,6 +14,10 @@ public class Crosshair : MonoBehaviour
     private float deltaLeftUpperLimit = 84;
     private bool interacted = false;
 
+    private float _maxGazeTime = 2.0f;
+    private float _gazeStartTime;
+    public LayerMask InteractionLayer;
+
 
     void Update()
     {
@@ -55,6 +59,27 @@ public class Crosshair : MonoBehaviour
         if (interacted && (deltaAngle > deltaRightUpperLimit && deltaAngle < deltaLeftUpperLimit))
         {
             interacted = false;
+        }
+
+        RaycastHit gazeHit;
+        if (Physics.Raycast(cam.position, cam.forward, out gazeHit, Mathf.Infinity))
+        {
+            if ((InteractionLayer.value & (1 << gazeHit.transform.gameObject.layer)) != 0)
+            {
+                if (_gazeStartTime == 0f)
+                {
+                    _gazeStartTime = Time.time;
+                }
+
+                if (Time.time - _gazeStartTime > _maxGazeTime)
+                {
+                    gazeHit.transform.gameObject.SendMessage("OnGazeInteract", SendMessageOptions.DontRequireReceiver);
+                    _gazeStartTime = 0;
+                }
+                Debug.Log("Gaze Interact");
+            } else {
+                _gazeStartTime = 0f;
+            }
         }
     }
 }

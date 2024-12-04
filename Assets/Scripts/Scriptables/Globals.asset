@@ -27,4 +27,4 @@ MonoBehaviour:
   DEFAULT_TAG: Untagged
   EXHIBIT_MENU_TAG: ExitExhibitMenuContainer
   TELEPORT_SPHERE_TAG: TeleportSphere
-  TOTAL_POINTS: 170
+  TOTAL_POINTS: 0
